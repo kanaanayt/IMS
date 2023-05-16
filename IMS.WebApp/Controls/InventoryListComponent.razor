@@ -1,0 +1,28 @@
+﻿@inject IViewInventoriesByNameService ViewInventoriesByNameService
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <InventoryListItemComponent inventories="@_inventories">
+        </InventoryListItemComponent>
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter]
+    public string SearchTerm { get; set; } = String.Empty;
+    private List<Inventory> _inventories = new List<Inventory>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _inventories = (await ViewInventoriesByNameService.ExecuteAsync(SearchTerm)).ToList();
+    }
+}

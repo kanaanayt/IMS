@@ -1,4 +1,5 @@
 ﻿using IMS.CoreBusiness;
+using IMS.Services.Inventories.Interfaces;
 using IMS.Services.PluginInterfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IMS.Services.Inventories
 {
-    public class ViewInventoriesByNameService
+    public class ViewInventoriesByNameService : IViewInventoriesByNameService
     {
         private readonly IInventoryRepository inventoryRepository;
 

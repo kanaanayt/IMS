@@ -1,0 +1,20 @@
+﻿@page "/inventories"
+
+@inject IViewInventoriesByNameService ViewInventoriesByNameService
+
+<h1>InventoryList</h1>
+
+<SearchInventoryComponent 
+    SearchEventCallback="SearchEventCallbackHandler">
+</SearchInventoryComponent>
+
+<InventoryListComponent SearchTerm="@SearchTerm"></InventoryListComponent>
+
+@code {
+    private string SearchTerm { get; set; } = String.Empty;
+
+    public void SearchEventCallbackHandler(string searchTerm)
+    {
+        this.SearchTerm = searchTerm;
+    }
+}
