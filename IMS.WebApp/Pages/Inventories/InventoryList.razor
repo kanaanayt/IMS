@@ -1,6 +1,7 @@
 ﻿@page "/inventories"
 
 @inject IViewInventoriesByNameService ViewInventoriesByNameService
+@inject NavigationManager NavigationManager
 
 <h1>InventoryList</h1>
 
@@ -10,13 +11,19 @@
 
 <InventoryListComponent SearchTerm="@SearchTerm"></InventoryListComponent>
 
-<Navlink class="btn" href="/addinventory">Add Inventory</Navlink>
+<button class="btn btn-primary"
+        @onclick="AddInventory">Add Inventory</button>
 
 @code {
     private string SearchTerm { get; set; } = String.Empty;
 
-    public void SearchEventCallbackHandler(string searchTerm)
+    private void SearchEventCallbackHandler(string searchTerm)
     {
         this.SearchTerm = searchTerm;
+    }
+
+    private void AddInventory()
+    {
+        NavigationManager.NavigateTo("addinventory");
     }
 }

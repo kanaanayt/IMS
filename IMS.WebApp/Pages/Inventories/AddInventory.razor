@@ -1,39 +1,19 @@
 ﻿@inject IAddInventoryItemService AddInventoryItemService
+@inject NavigationManager NavigationManager
 
 @page "/addinventory"
 
 <h1>Add Inventory</h1>
 
-<div class="form-group">
-    <input type="text"
-           placeholder="Enter Inventory Item Name"
-           class="form-control"
-           @bind-value=name/>
-    <input type="number"
-           class="form-control"
-           @bind-value="quantity"/>
-    <input type="number"
-           class="form-control"
-           @bind-value="price"/>
-    <input type="button"
-           value="Save Item"
-           class="btn btn-light"
-           @onclick=@OnSave />
-</div>
+<AddEditInventoryItem InventoryPopulated="@InventoryPopulated" operation="@operation">
+</AddEditInventoryItem>
 
 @code {
-    private string name;
-    private int quantity;
-    private double price;
-
-    public void OnSave()
-    {
-        var inventory = new Inventory
-            {
-                InventoryName = this.name,
-                Quantity = this.quantity,
-                Price = this.price,
-            };
-        AddInventoryItemService.ExecuteAsync(inventory);
-    }
+    public Inventory InventoryPopulated = new Inventory()
+        {
+            InventoryName = "",
+            Quantity = 1,
+            Price = 1
+        };
+    public string operation = "add";
 }

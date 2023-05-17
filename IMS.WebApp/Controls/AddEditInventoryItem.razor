@@ -1,0 +1,73 @@
+﻿@inject NavigationManager NavigationManager
+@inject IAddInventoryItemService AddInventoryItemService
+
+<EditForm Model="@inventory"
+          OnValidSubmit="SubmitHandler">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group">
+        <label for="invName">Inventory Name</label>
+        <InputText placeholder="Enter Inventory Name"
+                   @bind-Value="@inventory.InventoryName"
+                   id="invName"
+                   class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="invQuantity">Inventory Quantity</label>
+        <InputNumber @bind-Value="@inventory.Quantity"
+                     id="invQuantity"
+                     class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="invPrice">Inventory Price</label>
+        <InputNumber @bind-Value="@inventory.Price"
+                     id="invPrice"
+                     class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit"
+                class="btn btn-primary">Submit</button>
+        <button type="button"
+                class="btn btn-secondary"
+                @onclick="Redirect">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    public Inventory inventory = new();
+
+    [Parameter]
+    public Inventory InventoryPopulated { get; set; }
+
+    [Parameter]
+    public string operation { get; set; }
+
+    protected override void OnInitialized()
+    {
+        inventory.InventoryName = InventoryPopulated.InventoryName;
+        inventory.Quantity = InventoryPopulated.Quantity;
+        inventory.Price = InventoryPopulated.Price;
+    }
+
+    private void SubmitHandler()
+    {
+        if (operation.Equals("add"))
+        {
+            AddInventoryItemService.ExecuteAsync(inventory);
+        } 
+        else
+        {
+            //EditInventoryItemService.ExecuteAsync(inventory);
+        }
+        Redirect();
+    }
+
+    private void Redirect()
+    {
+        NavigationManager.NavigateTo("inventories");
+    }
+}
