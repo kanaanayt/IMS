@@ -48,5 +48,19 @@ namespace IMS.Plugins.InMemory
             return _inventories.Where(inv =>
                 inv.InventoryName.Contains(invName, StringComparison.OrdinalIgnoreCase));
         }
+        public Task AddInventoryItemAsync(Inventory inventory)
+        {
+            if (_inventories.Any(inv => String.Equals(inv.InventoryName, 
+                inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return Task.CompletedTask;
+            }
+
+            int count = _inventories.Count;
+            inventory.InventoryId = count + 1;
+
+            _inventories.Add(inventory);
+            return Task.CompletedTask;
+        }
     }
 }
