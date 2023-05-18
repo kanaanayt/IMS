@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager NavigationManager
 @inject IAddInventoryItemService AddInventoryItemService
 
-<EditForm Model="@inventory"
+<EditForm Model="inventory"
           OnValidSubmit="SubmitHandler">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
@@ -44,7 +44,7 @@
     public Inventory InventoryPopulated { get; set; }
 
     [Parameter]
-    public string operation { get; set; }
+    public string operation { get; set; } = String.Empty;
 
     protected override void OnInitialized()
     {
@@ -53,15 +53,15 @@
         inventory.Price = InventoryPopulated.Price;
     }
 
-    private void SubmitHandler()
+    private async Task SubmitHandler()
     {
         if (operation.Equals("add"))
         {
-            AddInventoryItemService.ExecuteAsync(inventory);
+            await AddInventoryItemService.ExecuteAsync(inventory);
         } 
         else
         {
-            //EditInventoryItemService.ExecuteAsync(inventory);
+            await EditInventoryItemService.ExecuteAsync(inventory);
         }
         Redirect();
     }

@@ -16,6 +16,8 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 builder.Services.AddTransient<IViewInventoriesByNameService, ViewInventoriesByNameService>();
 builder.Services.AddTransient<IAddInventoryItemService, AddInventoryItemService>();
+builder.Services.AddTransient<IEditInventoryItemService, EditInventoryItemService>();
+
 
 var app = builder.Build();
 

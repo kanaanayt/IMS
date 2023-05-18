@@ -62,5 +62,26 @@ namespace IMS.Plugins.InMemory
             _inventories.Add(inventory);
             return Task.CompletedTask;
         }
+        public Task EditInventoryItemAsync(Inventory inventory)
+        {
+            if (_inventories.Any(inv => inv.InventoryId != inventory.InventoryId &&
+                inv.InventoryName.Equals(inventory.InventoryName, 
+                                         StringComparison.OrdinalIgnoreCase)))
+            {
+                return Task.CompletedTask;
+            }
+
+            var invFound = _inventories.FirstOrDefault(inv =>
+                inv.InventoryId == inventory.InventoryId);
+
+            if (invFound != null)
+            {
+                invFound.InventoryName = inventory.InventoryName;
+                invFound.Quantity = inventory.Quantity;
+                invFound.Price = inventory.Price;
+            }
+
+            return Task.CompletedTask;
+        }
     }
 }
