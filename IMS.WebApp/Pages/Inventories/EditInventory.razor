@@ -1,0 +1,25 @@
+﻿@page "/editinventory/{id:int}"
+
+@inject IViewInventoriesByNameService ViewInventoriesByNameService
+@inject IGetInventoryByIdService GetInventoryByIdService
+
+<h3>EditInventory</h3>
+
+<AddEditInventoryItem InventoryPopulated="@InventoryPopulated" operation="@operation">
+</AddEditInventoryItem>
+
+@code {
+    private List<Inventory> _inventories = new List<Inventory>();
+
+    [Parameter]
+    public int id { get; set; }
+
+    public Inventory InventoryPopulated { get; set; } = new Inventory();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        InventoryPopulated = (await GetInventoryByIdService.ExecuteAsync(id));
+    }
+
+    public string operation = "edit";
+}

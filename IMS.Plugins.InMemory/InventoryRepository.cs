@@ -50,7 +50,7 @@ namespace IMS.Plugins.InMemory
         }
         public Task AddInventoryItemAsync(Inventory inventory)
         {
-            if (_inventories.Any(inv => String.Equals(inv.InventoryName, 
+            if (_inventories.Any(inv => String.Equals(inv.InventoryName,
                 inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
             {
                 return Task.CompletedTask;
@@ -64,9 +64,9 @@ namespace IMS.Plugins.InMemory
         }
         public Task EditInventoryItemAsync(Inventory inventory)
         {
-            if (_inventories.Any(inv => inv.InventoryId != inventory.InventoryId &&
-                inv.InventoryName.Equals(inventory.InventoryName, 
-                                         StringComparison.OrdinalIgnoreCase)))
+            if (_inventories.Any(inv => 
+                inv.InventoryId != inventory.InventoryId &&
+                inv.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
             {
                 return Task.CompletedTask;
             }
@@ -82,6 +82,10 @@ namespace IMS.Plugins.InMemory
             }
 
             return Task.CompletedTask;
+        }
+        public async Task<Inventory> GetInventoryByIdAsync(int inventoryId)
+        {
+            return await Task.FromResult(_inventories.First(inv => inv.InventoryId == inventoryId));
         }
     }
 }

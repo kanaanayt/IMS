@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 @inject IAddInventoryItemService AddInventoryItemService
+@inject IEditInventoryItemService EditInventoryItemService
 
 <EditForm Model="inventory"
           OnValidSubmit="SubmitHandler">
@@ -48,6 +49,10 @@
 
     protected override void OnInitialized()
     {
+        if (InventoryPopulated.InventoryId != null)
+        {
+            inventory.InventoryId = InventoryPopulated.InventoryId;
+        }
         inventory.InventoryName = InventoryPopulated.InventoryName;
         inventory.Quantity = InventoryPopulated.Quantity;
         inventory.Price = InventoryPopulated.Price;

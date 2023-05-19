@@ -17,6 +17,7 @@ builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 builder.Services.AddTransient<IViewInventoriesByNameService, ViewInventoriesByNameService>();
 builder.Services.AddTransient<IAddInventoryItemService, AddInventoryItemService>();
 builder.Services.AddTransient<IEditInventoryItemService, EditInventoryItemService>();
+builder.Services.AddTransient<IGetInventoryByIdService, GetInventoryByIdService>();
 
 
 var app = builder.Build();
