@@ -1,0 +1,22 @@
+﻿<div class="input-group">
+    <input type="text"
+           placeholder="Enter search for product"
+           class="form-control input-group-text"
+           @bind-value=@searchTerm />
+    <button type="button"
+            @onclick=@SearchProducts
+            class="btn btn-success">
+            Search</button>
+</div>
+
+@code {
+    public string searchTerm { get; set; } = String.Empty;
+
+    [Parameter]
+    public EventCallback<string> SearchProductsCallback { get; set; }
+
+    private async void SearchProducts()
+    {
+        await SearchProductsCallback.InvokeAsync(searchTerm);
+    }
+}

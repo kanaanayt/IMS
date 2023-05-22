@@ -1,0 +1,67 @@
+﻿@inject NavigationManager NavigationManager
+@inject IEditProductItemService EditProductItemService
+
+<EditForm Model="product"
+          OnValidSubmit="SubmitHandler">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="prodName">Product Name</label>
+        <InputText id="prodName" 
+                   @bind-Value="@product.ProductName"
+                   class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="prodQuant">Quantity</label>
+        <InputNumber id="prodQuant" 
+                     @bind-Value="@product.Quantity"
+                     class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="prodPrice">Price</label>
+        <InputNumber id="prodPrice"
+                     @bind-Value="@product.Price"
+                     class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit"
+                class="btn btn-primary">Submit</button>
+        <button type="button"
+                class="btn btn-secondary"
+                @onclick=Redirect>Cancel</button>
+    </div>
+
+</EditForm>
+
+@code {
+    public Product product = new();
+
+    [Parameter]
+    public Product productPopulated { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (productPopulated.ProductId != null)
+        {
+            product.ProductId = productPopulated.ProductId;
+        }
+        product.ProductName = productPopulated.ProductName;
+        product.Quantity = productPopulated.Quantity;
+        product.Price = productPopulated.Price;
+    }
+
+    private async Task SubmitHandler()
+    {
+        await EditProductItemService.ExecuteAsync(product);
+        Redirect();
+    }
+
+    public void Redirect()
+    {
+        NavigationManager.NavigateTo("products");
+    }
+}

@@ -1,0 +1,18 @@
+﻿@page "/products"
+
+<h1>Product List</h1>
+<br />
+
+<SearchProductListComponent 
+    SearchProductsCallback=@SearchProductsCallbackHandler />
+
+<ProductListComponent searchTerm="@searchTerm" />
+
+@code {
+    public string searchTerm { get; set; } = String.Empty;
+
+    public void SearchProductsCallbackHandler(string searchTerm)
+    {
+        this.searchTerm = searchTerm;
+    }
+}

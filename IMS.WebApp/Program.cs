@@ -5,6 +5,8 @@ using IMS.Services.PluginInterfaces;
 using IMS.WebApp.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using IMS.Services.Products;
+using IMS.Services.Products.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,11 @@ builder.Services.AddTransient<IViewInventoriesByNameService, ViewInventoriesByNa
 builder.Services.AddTransient<IAddInventoryItemService, AddInventoryItemService>();
 builder.Services.AddTransient<IEditInventoryItemService, EditInventoryItemService>();
 builder.Services.AddTransient<IGetInventoryByIdService, GetInventoryByIdService>();
+
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<IViewProductsByNameService, ViewProductsByNameService>();
+builder.Services.AddTransient<IGetProductByIdService, GetProductByIdService>();
+builder.Services.AddTransient<IEditProductItemService, EditProductItemService>();
 
 
 var app = builder.Build();

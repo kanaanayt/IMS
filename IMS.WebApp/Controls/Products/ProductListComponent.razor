@@ -1,0 +1,28 @@
+﻿@inject IViewProductsByNameService ViewProductsByNameService;
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <ProductListItemComponent products="@_products" />
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter]
+    public string searchTerm { get; set; } = String.Empty;
+
+    private List<Product> _products = new List<Product>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        this._products = (await ViewProductsByNameService.ExecuteAsync(searchTerm)).ToList();
+    }
+}
