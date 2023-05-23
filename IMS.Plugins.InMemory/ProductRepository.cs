@@ -10,7 +10,7 @@ namespace IMS.Plugins.InMemory
 {
     public class ProductRepository : IProductRepository
     {
-        private IEnumerable<Product> _products;
+        private List<Product> _products;
 
         public ProductRepository()
         {
@@ -20,15 +20,15 @@ namespace IMS.Plugins.InMemory
 
                     ProductId = 1,
                     ProductName = "Bike",
-                    Quantity = 1,
-                    Price = 1
+                    Quantity = 10,
+                    Price = 150
 
                 }, new Product {
 
                     ProductId = 2,
                     ProductName = "Car",
-                    Quantity = 1,
-                    Price = 1
+                    Quantity = 5,
+                    Price = 25000
                 }
             };
         }
@@ -44,7 +44,7 @@ namespace IMS.Plugins.InMemory
         }
         public async Task<Product> GetProductByIdAsync(int productId)
         {
-            return await Task.FromResult(_products.Single(prod => prod.ProductId == productId));
+            return await Task.FromResult(_products.FirstOrDefault(prod => prod.ProductId == productId));
         }
         public async Task EditProductItemAsync(Product product)
         {
@@ -65,6 +65,17 @@ namespace IMS.Plugins.InMemory
                 editProduct.Price = product.Price;
             }
             return;
+        }
+        public Task AddProductItemAsync(Product product)
+        {
+            if (_products.Any(prod =>
+                prod.ProductName == product.ProductName))
+            {
+                return Task.CompletedTask;
+            }
+            product.ProductId = _products.Count() + 1;
+            _products.Add(product);
+            return Task.CompletedTask;
         }
     }
 }

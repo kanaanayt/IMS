@@ -1,0 +1,17 @@
+﻿@page "/addproduct"
+
+<h1>AddProduct</h1>
+
+<AddEditProductItemComponent 
+    productPopulated="product"
+    operation="@operation" />
+
+@code {
+    public Product product = new Product
+        {
+            ProductName = "",
+            Quantity = 1,
+            Price = 1
+        };
+    public string operation = "add";
+}

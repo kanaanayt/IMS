@@ -7,5 +7,6 @@ namespace IMS.Services.PluginInterfaces
         Task<IEnumerable<Product>> GetProductsByNameAsync(string searchTerm);
         Task<Product> GetProductByIdAsync(int productId);
         Task EditProductItemAsync(Product product);
+        Task AddProductItemAsync(Product product);
     }
 }

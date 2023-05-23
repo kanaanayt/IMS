@@ -4,11 +4,15 @@
 
 <h3>EditProduct</h3>
 
-<EditProductItemComponent productPopulated="@productPopulated" />
+<AddEditProductItemComponent 
+    productPopulated="@productPopulated"
+    operation="@operation" />
 
 @code {
     [Parameter]
     public int id { get; set; }
+
+    public string operation = "edit";
 
     public Product productPopulated { get; set; } = new Product();
 

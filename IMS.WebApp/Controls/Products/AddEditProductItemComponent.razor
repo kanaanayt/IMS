@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 @inject IEditProductItemService EditProductItemService
+@inject IAddProductItemService AddProductItemService
 
 <EditForm Model="product"
           OnValidSubmit="SubmitHandler">
@@ -43,6 +44,9 @@
     [Parameter]
     public Product productPopulated { get; set; }
 
+    [Parameter]
+    public string operation { get; set; }
+
     protected override void OnInitialized()
     {
         if (productPopulated.ProductId != null)
@@ -56,7 +60,14 @@
 
     private async Task SubmitHandler()
     {
-        await EditProductItemService.ExecuteAsync(product);
+        if (operation.Equals("add"))
+        {
+            await AddProductItemService.ExecuteAsync(product);
+        }
+        else
+        {
+            await EditProductItemService.ExecuteAsync(product);
+        }
         Redirect();
     }
 
