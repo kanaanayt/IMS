@@ -44,7 +44,7 @@ namespace IMS.Plugins.InMemory
         }
         public async Task<Product> GetProductByIdAsync(int productId)
         {
-            return await Task.FromResult(_products.FirstOrDefault(prod => prod.ProductId == productId));
+            return await Task.FromResult(_products.Single(prod => prod.ProductId == productId));
         }
         public async Task EditProductItemAsync(Product product)
         {
@@ -69,12 +69,15 @@ namespace IMS.Plugins.InMemory
         public Task AddProductItemAsync(Product product)
         {
             if (_products.Any(prod =>
-                prod.ProductName == product.ProductName))
+                prod.ProductName.Equals(product.ProductName,
+                StringComparison.OrdinalIgnoreCase)))
             {
                 return Task.CompletedTask;
             }
+
             product.ProductId = _products.Count() + 1;
             _products.Add(product);
+
             return Task.CompletedTask;
         }
     }

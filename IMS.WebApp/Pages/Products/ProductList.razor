@@ -1,5 +1,7 @@
 ﻿@page "/products"
 
+@inject NavigationManager NavigationManager
+
 <h1>Product List</h1>
 <br />
 
@@ -8,11 +10,19 @@
 
 <ProductListComponent searchTerm="@searchTerm" />
 
+<button type="button"
+        class="btn btn-primary"
+        @onclick="addHandler">Add Product</button>
+
 @code {
     public string searchTerm { get; set; } = String.Empty;
 
     public void SearchProductsCallbackHandler(string searchTerm)
     {
         this.searchTerm = searchTerm;
+    }
+    private void addHandler()
+    {
+        NavigationManager.NavigateTo("addproduct");
     }
 }
