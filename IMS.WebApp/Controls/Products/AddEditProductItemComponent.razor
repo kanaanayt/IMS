@@ -27,6 +27,16 @@
                      @bind-Value="@product.Price"
                      class="form-control" />
     </div>
+    
+    <br />
+    
+    @if (operation == "add")
+    {
+        <div class="form-group">
+            <label for="inventory">Inventory Items</label>
+            <InventoryDropdownComponent />
+        </div>
+    }
 
     <div class="form-group">
         <button type="submit"
@@ -64,7 +74,7 @@
         {
             await AddProductItemService.ExecuteAsync(product);
         }
-        else
+        else if (operation.Equals("edit"))
         {
             await EditProductItemService.ExecuteAsync(product);
         }

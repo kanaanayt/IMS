@@ -1,0 +1,50 @@
+﻿@page "/sic"
+
+@inject IViewInventoriesByNameService ViewInventoriesByNameService
+@inject IGetInventoryByIdService GetInventoryByIdService
+
+
+<SearchInventoryComponent SearchEventCallback="SearchEventCallbackHandler" />
+
+@if (_inventories.Count > 0)
+{
+    <div class="form-group" style="overflow-y: auto;
+                                   max-height: 300px;
+                                   border: 1px solid silver;
+                                   padding: 10px;">
+        <ul style="list-style: none;
+                   cursor: pointer;">
+            @foreach (var inv in _inventories)
+            {
+                <li @key=inv.InventoryId
+                    @onclick="@( () => OnSelectInventory(inv.InventoryId) )">
+                    @inv.InventoryName
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<select>
+    @foreach (var inv in _inventories)
+    {
+        <option value=@inv.InventoryName>@inv.InventoryName</option>
+    }
+</select>
+
+
+@code {
+
+    private List<Inventory> _inventories = new();
+
+    private async Task SearchEventCallbackHandler(string search)
+    {
+        this._inventories = (await ViewInventoriesByNameService.ExecuteAsync(search)).ToList();
+    }
+
+    private async void OnSelectInventory(int inventoryId)
+    {
+        Inventory selected = await GetInventoryByIdService.ExecuteAsync(inventoryId);
+        _inventories.Clear();
+    }
+}
