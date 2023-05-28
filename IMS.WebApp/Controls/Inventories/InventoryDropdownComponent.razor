@@ -3,21 +3,22 @@
 @inject IViewInventoriesByNameService ViewInventoriesByNameService
 @inject IGetInventoryByIdService GetInventoryByIdService
 
-
 <SearchInventoryComponent SearchEventCallback="SearchEventCallbackHandler" />
 
 @if (_inventories.Count > 0)
 {
-    <div class="form-group" style="overflow-y: auto;
-                                   max-height: 300px;
-                                   border: 1px solid silver;
-                                   padding: 10px;">
-        <ul style="list-style: none;
-                   cursor: pointer;">
+    <div class="form-group custom-div" 
+         style="overflow-y: auto;
+                max-height: 300px;
+                border: 1px solid silver;
+                padding: 10px;">
+
+        <ul style="list-style: none;">
             @foreach (var inv in _inventories)
             {
-                <li @key=inv.InventoryId
-                    @onclick="@( () => OnSelectInventory(inv.InventoryId) )">
+                <li style="cursor: pointer;"
+                    @key=inv.InventoryId
+                    @onclick="@( async () => await OnSelectInventory(inv) )">
                     @inv.InventoryName
                 </li>
             }
@@ -34,17 +35,20 @@
 
 
 @code {
-
     private List<Inventory> _inventories = new();
 
     private async Task SearchEventCallbackHandler(string search)
     {
-        this._inventories = (await ViewInventoriesByNameService.ExecuteAsync(search)).ToList();
+        this._inventories = (await ViewInventoriesByNameService.ExecuteAsync(search))
+                            .ToList();
     }
 
-    private async void OnSelectInventory(int inventoryId)
+    [Parameter]
+    public EventCallback<Inventory> ClickEventCallback { get; set; }
+
+    private async Task OnSelectInventory(Inventory inventory)
     {
-        Inventory selected = await GetInventoryByIdService.ExecuteAsync(inventoryId);
+        await ClickEventCallback.InvokeAsync(inventory);
         _inventories.Clear();
     }
 }

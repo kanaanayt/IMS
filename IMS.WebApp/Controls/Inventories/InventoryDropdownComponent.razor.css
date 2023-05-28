@@ -1,0 +1,14 @@
+﻿.custom-div {
+    overflow-y: auto;
+    max-height: 300px;
+    border: 1px solid silver;
+    padding: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    cursor: pointer;
+}

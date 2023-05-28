@@ -34,9 +34,12 @@
     {
         <div class="form-group">
             <label for="inventory">Inventory Items</label>
-            <InventoryDropdownComponent />
+            <InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler">
+            </InventoryDropdownComponent>
         </div>
     }
+
+    @inventory.InventoryName;
 
     <div class="form-group">
         <button type="submit"
@@ -49,6 +52,8 @@
 </EditForm>
 
 @code {
+    public Inventory inventory = new();
+
     public Product product = new();
 
     [Parameter]
@@ -67,7 +72,7 @@
         product.Quantity = productPopulated.Quantity;
         product.Price = productPopulated.Price;
     }
-      
+
     private async Task SubmitHandler()
     {
         if (operation.Equals("add"))
@@ -84,5 +89,10 @@
     public void Redirect()
     {
         NavigationManager.NavigateTo("products");
+    }
+
+    public void ClickEventCallbackHandler(Inventory inventory)
+    {
+        this.inventory = inventory;
     }
 }
