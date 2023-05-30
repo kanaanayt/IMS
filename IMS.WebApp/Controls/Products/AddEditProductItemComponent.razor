@@ -4,6 +4,7 @@
 
 <EditForm Model="product"
           OnValidSubmit="SubmitHandler">
+
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -34,12 +35,11 @@
     {
         <div class="form-group">
             <label for="inventory">Inventory Items</label>
-            <InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler">
-            </InventoryDropdownComponent>
+            <InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler" />
         </div>
     }
 
-    @inventory.InventoryName;
+    @inventory.InventoryName
 
     <div class="form-group">
         <button type="submit"
@@ -57,10 +57,10 @@
     public Product product = new();
 
     [Parameter]
-    public Product productPopulated { get; set; }
+    public Product productPopulated { get; set; } = new Product();
 
     [Parameter]
-    public string operation { get; set; }
+    public string operation { get; set; } = String.Empty;
 
     protected override void OnInitialized()
     {

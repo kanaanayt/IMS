@@ -7,17 +7,11 @@
 
 @if (_inventories.Count > 0)
 {
-    <div class="form-group custom-div" 
-         style="overflow-y: auto;
-                max-height: 300px;
-                border: 1px solid silver;
-                padding: 10px;">
-
-        <ul style="list-style: none;">
+    <div class="form-group custom-div">
+        <ul>
             @foreach (var inv in _inventories)
             {
-                <li style="cursor: pointer;"
-                    @key=inv.InventoryId
+                <li @key=inv.InventoryId
                     @onclick="@( async () => await OnSelectInventory(inv) )">
                     @inv.InventoryName
                 </li>
