@@ -1,12 +1,15 @@
 ﻿<div class="input-group">
+
     <input type="text" 
            class="input-group-text form-control" 
            placeholder="Begin your search"
            @bind-value=@SearchTerm />
+
     <input type="button" 
            class="btn btn-success"
            value="Search"
            @onclick=@OnSearch />
+
 </div>
 
 @code {

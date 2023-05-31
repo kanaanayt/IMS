@@ -7,7 +7,7 @@
 
 @if (_inventories.Count > 0)
 {
-    <div class="form-group custom-div">
+    <div class="searchBox">
         <ul>
             @foreach (var inv in _inventories)
             {
@@ -31,14 +31,14 @@
 @code {
     private List<Inventory> _inventories = new();
 
+    [Parameter]
+    public EventCallback<Inventory> ClickEventCallback { get; set; }
+
     private async Task SearchEventCallbackHandler(string search)
     {
         this._inventories = (await ViewInventoriesByNameService.ExecuteAsync(search))
                             .ToList();
     }
-
-    [Parameter]
-    public EventCallback<Inventory> ClickEventCallback { get; set; }
 
     private async Task OnSelectInventory(Inventory inventory)
     {

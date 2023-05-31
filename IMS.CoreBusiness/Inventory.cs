@@ -17,6 +17,5 @@ namespace IMS.CoreBusiness
         [Required]
         [Range(1, 1000, ErrorMessage = "Invalid price")]
         public double Price { get; set; }
-
     }
 }

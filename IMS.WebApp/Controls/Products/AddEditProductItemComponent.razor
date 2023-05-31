@@ -35,7 +35,7 @@
     {
         <div class="form-group">
             <label for="inventory">Inventory Items</label>
-            <InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler" />
+            <ProductInventoriesComponent />
         </div>
     }
 
@@ -50,11 +50,17 @@
     </div>
 
 </EditForm>
+@*if (product != null)
+{
+    @foreach (var prodInv in product.ProductInventories)
+    {
+        @prodInv.InventoryId
+    }
+}*@
 
 @code {
-    public Inventory inventory = new();
-
     public Product product = new();
+
 
     [Parameter]
     public Product productPopulated { get; set; } = new Product();
@@ -89,10 +95,5 @@
     public void Redirect()
     {
         NavigationManager.NavigateTo("products");
-    }
-
-    public void ClickEventCallbackHandler(Inventory inventory)
-    {
-        this.inventory = inventory;
     }
 }

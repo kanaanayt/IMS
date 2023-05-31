@@ -1,0 +1,39 @@
+﻿<InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler" />
+
+
+@code {
+    [Parameter]
+    public List<ProductInventory> ProductInventories { get; set; } = new();
+
+
+
+    public Inventory inventory = new();
+
+    public List<Inventory> inventoriesSelected = new();
+
+
+    private async Task ClickEventCallbackHandler(Inventory inventory)
+    {
+        if (ProductInventories.Any(inv => inv.InventoryId == inventory.InventoryId)
+        {
+
+        }
+        else
+        {
+            
+        }
+
+        this.inventory = inventory;
+
+        // my atttempt code
+        var prodInv = new ProductInventory
+            {
+                ProductId = product.ProductId,
+                InventoryId = inventory.InventoryId,
+                InventoryQuantity = 1
+            };
+        product.ProductInventories.Add(prodInv);
+    }
+
+    
+}

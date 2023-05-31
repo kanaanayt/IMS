@@ -1,14 +1,17 @@
-﻿.custom-div {
+﻿.searchBox
+{
     overflow-y: auto;
     max-height: 300px;
     border: 1px solid silver;
     padding: 10px;
 }
 
-ul {
+ul 
+{
     list-style: none;
 }
 
-li {
+li 
+{
     cursor: pointer;
 }
