@@ -20,14 +20,6 @@
     </div>
 }
 
-<select>
-    @foreach (var inv in _inventories)
-    {
-        <option value=@inv.InventoryName>@inv.InventoryName</option>
-    }
-</select>
-
-
 @code {
     private List<Inventory> _inventories = new();
 

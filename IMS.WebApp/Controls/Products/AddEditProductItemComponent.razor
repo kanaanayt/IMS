@@ -35,12 +35,12 @@
     {
         <div class="form-group">
             <label for="inventory">Inventory Items</label>
-            <ProductInventoriesComponent />
+            <ProductInventoriesComponent ProductInventories="@product.ProductInventories"/>
         </div>
     }
 
-    @inventory.InventoryName
-
+    <br />
+    
     <div class="form-group">
         <button type="submit"
                 class="btn btn-primary">Submit</button>
@@ -50,17 +50,16 @@
     </div>
 
 </EditForm>
-@*if (product != null)
+@if (product != null)
 {
     @foreach (var prodInv in product.ProductInventories)
     {
-        @prodInv.InventoryId
+        @prodInv.InventoryQuantity
     }
-}*@
+}
 
 @code {
     public Product product = new();
-
 
     [Parameter]
     public Product productPopulated { get; set; } = new Product();
@@ -82,14 +81,12 @@
     private async Task SubmitHandler()
     {
         if (operation.Equals("add"))
-        {
             await AddProductItemService.ExecuteAsync(product);
-        }
+        
         else if (operation.Equals("edit"))
-        {
             await EditProductItemService.ExecuteAsync(product);
-        }
-        Redirect();
+        
+        NavigationManager.NavigateTo("products");
     }
 
     public void Redirect()

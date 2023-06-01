@@ -1,39 +1,63 @@
 ﻿<InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler" />
 
+@if (ProductInventories.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Inventory Name</th>
+                <th>Quantiy</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prodInv in ProductInventories)
+            {
+                <tr>
+                    <td>
+                        @prodInv.Inventory?.InventoryName
+                    </td>
+
+                    <td>
+                        <input type="number"
+                               min="1"
+                               @bind-value=prodInv.InventoryQuantity />
+                    </td>
+
+                    <td>
+                        <button type="button"
+                                class="btn btn-link"
+                                @onclick=@( () => RemoveProductInventory(prodInv) )>
+                                Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 
 @code {
     [Parameter]
     public List<ProductInventory> ProductInventories { get; set; } = new();
 
-
-
-    public Inventory inventory = new();
-
-    public List<Inventory> inventoriesSelected = new();
-
-
-    private async Task ClickEventCallbackHandler(Inventory inventory)
+    private void ClickEventCallbackHandler(Inventory inventory)
     {
-        if (ProductInventories.Any(inv => inv.InventoryId == inventory.InventoryId)
+        if (!ProductInventories.Any(prodInv => 
+            prodInv.Inventory != null && 
+            prodInv.Inventory.InventoryName.Equals(inventory.InventoryName)))
         {
-
+            ProductInventories.Add(new ProductInventory
+                {
+                    InventoryId = inventory.InventoryId,
+                    Inventory = inventory,
+                    InventoryQuantity = 1
+                });
         }
-        else
-        {
-            
-        }
-
-        this.inventory = inventory;
-
-        // my atttempt code
-        var prodInv = new ProductInventory
-            {
-                ProductId = product.ProductId,
-                InventoryId = inventory.InventoryId,
-                InventoryQuantity = 1
-            };
-        product.ProductInventories.Add(prodInv);
     }
 
-    
+    private void RemoveProductInventory(ProductInventory productInventory)
+    {
+        this.ProductInventories.Remove(productInventory);
+    }
 }

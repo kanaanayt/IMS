@@ -23,6 +23,6 @@ namespace IMS.CoreBusiness
         [Range(1, 1000, ErrorMessage="Invalid Price")]
         public double Price { get; set; }
 
-        public List<ProductInventory> ProductInventories { get; set; }
+        public List<ProductInventory> ProductInventories { get; set; } = new();
     }
 }
