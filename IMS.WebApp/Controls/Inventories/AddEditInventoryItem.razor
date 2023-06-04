@@ -2,29 +2,30 @@
 @inject IAddInventoryItemService AddInventoryItemService
 @inject IEditInventoryItemService EditInventoryItemService
 
-<EditForm Model="inventory"
+<EditForm Model="InventoryPopulated"
           OnValidSubmit="SubmitHandler">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
     <div class="form-group">
         <label for="invName">Inventory Name</label>
         <InputText placeholder="Enter Inventory Name"
-                   @bind-Value="@inventory.InventoryName"
+                   @bind-Value="@InventoryPopulated.InventoryName"
                    id="invName"
                    class="form-control" />
     </div>
 
     <div class="form-group">
         <label for="invQuantity">Inventory Quantity</label>
-        <InputNumber @bind-Value="@inventory.Quantity"
+        <InputNumber @bind-Value="@InventoryPopulated.Quantity"
                      id="invQuantity"
                      class="form-control" />
     </div>
 
     <div class="form-group">
         <label for="invPrice">Inventory Price</label>
-        <InputNumber @bind-Value="@inventory.Price"
+        <InputNumber @bind-Value="@InventoryPopulated.Price"
                      id="invPrice"
                      class="form-control" />
     </div>
@@ -39,34 +40,21 @@
 </EditForm>
 
 @code {
-    public Inventory inventory = new();
-
     [Parameter]
-    public Inventory InventoryPopulated { get; set; }
+    public Inventory InventoryPopulated { get; set; } = new();
 
     [Parameter]
     public string operation { get; set; } = String.Empty;
-
-    protected override void OnInitialized()
-    {
-        if (InventoryPopulated.InventoryId != null)
-        {
-            inventory.InventoryId = InventoryPopulated.InventoryId;
-        }
-        inventory.InventoryName = InventoryPopulated.InventoryName;
-        inventory.Quantity = InventoryPopulated.Quantity;
-        inventory.Price = InventoryPopulated.Price;
-    }
 
     private async Task SubmitHandler()
     {
         if (operation.Equals("add"))
         {
-            await AddInventoryItemService.ExecuteAsync(inventory);
+            await AddInventoryItemService.ExecuteAsync(InventoryPopulated);
         } 
-        else
+        else if (operation.Equals("edit"))
         {
-            await EditInventoryItemService.ExecuteAsync(inventory);
+            await EditInventoryItemService.ExecuteAsync(InventoryPopulated);
         }
         Redirect();
     }

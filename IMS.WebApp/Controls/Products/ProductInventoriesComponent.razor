@@ -43,16 +43,19 @@
 
     private void ClickEventCallbackHandler(Inventory inventory)
     {
-        if (!ProductInventories.Any(prodInv => 
-            prodInv.Inventory != null && 
-            prodInv.Inventory.InventoryName.Equals(inventory.InventoryName)))
+        bool duplicate = ProductInventories.Any(prodInv =>
+            prodInv.Inventory != null &&
+            prodInv.Inventory.InventoryName.Equals(inventory.InventoryName));
+
+        if (!duplicate)
         {
             ProductInventories.Add(new ProductInventory
                 {
                     InventoryId = inventory.InventoryId,
                     Inventory = inventory,
                     InventoryQuantity = 1
-                });
+                }
+            );
         }
     }
 

@@ -4,12 +4,10 @@
 
 <h3>EditInventory</h3>
 
-<AddEditInventoryItem InventoryPopulated="@InventoryPopulated" operation="@operation">
-</AddEditInventoryItem>
+<AddEditInventoryItem InventoryPopulated="@InventoryPopulated" 
+                      operation="@operation" />
 
 @code {
-    private List<Inventory> _inventories = new List<Inventory>();
-
     [Parameter]
     public int id { get; set; }
 

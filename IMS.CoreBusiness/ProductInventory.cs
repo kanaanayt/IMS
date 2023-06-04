@@ -16,7 +16,6 @@ namespace IMS.CoreBusiness
         [ForeignKey("Inventory")]
         public int InventoryId { get; set; }
         public Inventory? Inventory { get; set; }
-        
         public int InventoryQuantity { get; set; }
     }
 }

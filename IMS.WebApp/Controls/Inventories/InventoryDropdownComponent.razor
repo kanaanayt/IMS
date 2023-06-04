@@ -1,7 +1,4 @@
-﻿@page "/sic"
-
-@inject IViewInventoriesByNameService ViewInventoriesByNameService
-@inject IGetInventoryByIdService GetInventoryByIdService
+﻿@inject IViewInventoriesByNameService ViewInventoriesByNameService
 
 <SearchInventoryComponent SearchEventCallback="SearchEventCallbackHandler" />
 
@@ -9,11 +6,11 @@
 {
     <div class="searchBox">
         <ul>
-            @foreach (var inv in _inventories)
+            @foreach (var inventory in _inventories)
             {
-                <li @key=inv.InventoryId
-                    @onclick="@( async () => await OnSelectInventory(inv) )">
-                    @inv.InventoryName
+                <li @key=inventory.InventoryId
+                    @onclick="@( async () => await OnSelectInventory(inventory) )">
+                    @inventory.InventoryName
                 </li>
             }
         </ul>
