@@ -24,5 +24,27 @@ namespace IMS.CoreBusiness
         public double Price { get; set; }
 
         public List<ProductInventory> ProductInventories { get; set; } = new();
+
+        public void AddProductInventory(Inventory inventory)
+        {
+            bool duplicate = this.ProductInventories.Any(prodInv =>
+                prodInv.Inventory != null &&
+                prodInv.Inventory.InventoryName.Equals(inventory.InventoryName));
+
+            if (!duplicate)
+            {
+                this.ProductInventories.Add(
+                    new ProductInventory
+                    {
+                        InventoryId = inventory.InventoryId,
+                        Inventory = inventory,
+                        InventoryQuantity = 1,
+                        ProductId = this.ProductId,
+                        Product = this
+
+                    }
+                );
+            }
+        }
     }
 }

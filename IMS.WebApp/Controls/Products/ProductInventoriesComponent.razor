@@ -1,6 +1,7 @@
 ﻿<InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler" />
 
-@if (ProductInventories.Count() > 0)
+@if (ProductWithEmptyList.ProductInventories != null 
+     && ProductWithEmptyList.ProductInventories.Count() > 0)
 {
     <table class="table">
         <thead>
@@ -11,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var prodInv in ProductInventories)
+            @foreach (var prodInv in ProductWithEmptyList.ProductInventories)
             {
                 <tr>
                     <td>
@@ -39,28 +40,15 @@
 
 @code {
     [Parameter]
-    public List<ProductInventory> ProductInventories { get; set; } = new();
+    public Product ProductWithEmptyList { get; set; } = new();
 
     private void ClickEventCallbackHandler(Inventory inventory)
     {
-        bool duplicate = ProductInventories.Any(prodInv =>
-            prodInv.Inventory != null &&
-            prodInv.Inventory.InventoryName.Equals(inventory.InventoryName));
-
-        if (!duplicate)
-        {
-            ProductInventories.Add(new ProductInventory
-                {
-                    InventoryId = inventory.InventoryId,
-                    Inventory = inventory,
-                    InventoryQuantity = 1
-                }
-            );
-        }
+        ProductWithEmptyList.AddProductInventory(inventory);
     }
 
     private void RemoveProductInventory(ProductInventory productInventory)
     {
-        this.ProductInventories.Remove(productInventory);
+        ProductWithEmptyList.ProductInventories.Remove(productInventory);
     }
 }
