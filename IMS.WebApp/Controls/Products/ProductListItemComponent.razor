@@ -18,11 +18,10 @@
 
 @code {
     [Parameter]
-    public List<Product> products { get; set; } = new List<Product>();
+    public List<Product> products { get; set; } = new();
 
-    public void EditProduct(int productId)
+    public void EditProduct(int id)
     {
-        NavigationManager.NavigateTo($"editproduct/{productId}");
+        NavigationManager.NavigateTo($"editproduct/{id}");
     }
-
 }

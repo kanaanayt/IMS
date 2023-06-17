@@ -2,21 +2,19 @@
 
 @inject IGetInventoryByIdService GetInventoryByIdService
 
-<h3>EditInventory</h3>
+<h3>Edit Inventory</h3>
 
 <AddEditInventoryItem InventoryPopulated="@InventoryPopulated" 
-                      operation="@operation" />
+                       operation="@operation" />
 
 @code {
     [Parameter]
     public int id { get; set; }
-
-    public Inventory InventoryPopulated { get; set; } = new Inventory();
+    public string operation = "edit";
+    public Inventory InventoryPopulated { get; set; } = new();
 
     protected override async Task OnParametersSetAsync()
     {
         InventoryPopulated = (await GetInventoryByIdService.ExecuteAsync(id));
     }
-
-    public string operation = "edit";
 }

@@ -35,7 +35,7 @@
     {
         <div class="form-group">
             <label for="inventory">Inventory Items</label>
-            <ProductInventoriesComponent ProductWithEmptyList="@productPopulated" />
+            <ProductInventoriesComponent ProductInventoryless"="@productPopulated" />
         </div>
     }
 
@@ -54,7 +54,7 @@
 
 @code {
     [Parameter]
-    public Product productPopulated { get; set; } = new Product();
+    public Product productPopulated { get; set; } = new();
 
     [Parameter]
     public string operation { get; set; } = String.Empty;
@@ -64,7 +64,7 @@
         if (operation.Equals("add"))
             await AddProductItemService.ExecuteAsync(productPopulated);
         
-        else if (operation.Equals("edit"))
+        else
             await EditProductItemService.ExecuteAsync(productPopulated);
         
         Redirect();

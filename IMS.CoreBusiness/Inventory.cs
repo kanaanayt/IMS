@@ -11,11 +11,11 @@ namespace IMS.CoreBusiness
         public string InventoryName { get; set; } = String.Empty;
 
         [Required]
-        [Range(1, 1000, ErrorMessage = "Invalid quantity")]
+        [Range(1, 100, ErrorMessage = "Invalid quantity")]
         public int Quantity { get; set; }
 
         [Required]
-        [Range(1, 1000, ErrorMessage = "Invalid price")]
+        [Range(1, 100, ErrorMessage = "Invalid price")]
         public double Price { get; set; }
     }
 }

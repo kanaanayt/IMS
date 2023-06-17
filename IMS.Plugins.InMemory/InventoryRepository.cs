@@ -6,9 +6,10 @@ namespace IMS.Plugins.InMemory
     public class InventoryRepository : IInventoryRepository
     {
         private List<Inventory> _inventories;
+
         public InventoryRepository()
         {
-            _inventories = new List<Inventory>()
+            _inventories = new List<Inventory>
             {
                 new Inventory {
 
@@ -46,9 +47,12 @@ namespace IMS.Plugins.InMemory
             if (String.IsNullOrWhiteSpace(invName)) 
                 return await Task.FromResult(_inventories);
 
-            return _inventories.Where(inv =>
+            var inventories = _inventories.Where(inv =>
                 inv.InventoryName.Contains(invName, StringComparison.OrdinalIgnoreCase));
+            return await Task.FromResult(inventories);
+           
         }
+
         public Task AddInventoryItemAsync(Inventory inventory)
         {
             if (_inventories.Any(inv => String.Equals(inv.InventoryName,
@@ -57,12 +61,12 @@ namespace IMS.Plugins.InMemory
                 return Task.CompletedTask;
             }
 
-            int count = _inventories.Count;
-            inventory.InventoryId = count + 1;
-
+            inventory.InventoryId = _inventories.Count + 1;
             _inventories.Add(inventory);
+
             return Task.CompletedTask;
         }
+
         public Task EditInventoryItemAsync(Inventory inventory)
         {
             if (_inventories.Any(inv => 
@@ -72,18 +76,19 @@ namespace IMS.Plugins.InMemory
                 return Task.CompletedTask;
             }
 
-            var invFound = _inventories.FirstOrDefault(inv =>
+            var match = _inventories.Single(inv =>
                 inv.InventoryId == inventory.InventoryId);
 
-            if (invFound != null)
+            if (match != null)
             {
-                invFound.InventoryName = inventory.InventoryName;
-                invFound.Quantity = inventory.Quantity;
-                invFound.Price = inventory.Price;
+                match.InventoryName = inventory.InventoryName;
+                match.Quantity = inventory.Quantity;
+                match.Price = inventory.Price;
             }
 
             return Task.CompletedTask;
         }
+
         public async Task<Inventory> GetInventoryByIdAsync(int inventoryId)
         {
             return await Task.FromResult(_inventories.First(inv => inv.InventoryId == inventoryId));

@@ -51,11 +51,12 @@
         if (operation.Equals("add"))
         {
             await AddInventoryItemService.ExecuteAsync(InventoryPopulated);
-        } 
-        else if (operation.Equals("edit"))
+        }    
+        else
         {
             await EditInventoryItemService.ExecuteAsync(InventoryPopulated);
         }
+
         Redirect();
     }
 

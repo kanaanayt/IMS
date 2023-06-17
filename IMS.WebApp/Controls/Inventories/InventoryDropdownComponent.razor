@@ -21,17 +21,16 @@
     private List<Inventory> _inventories = new();
 
     [Parameter]
-    public EventCallback<Inventory> ClickEventCallback { get; set; }
+    public EventCallback<Inventory> InventoryClickEventCallback { get; set; }
 
-    private async Task SearchEventCallbackHandler(string search)
+    private async Task SearchEventCallbackHandler(string inventorySearch)
     {
-        this._inventories = (await ViewInventoriesByNameService.ExecuteAsync(search))
-                            .ToList();
+        this._inventories = (await ViewInventoriesByNameService.ExecuteAsync(inventorySearch)).ToList();
     }
 
     private async Task OnSelectInventory(Inventory inventory)
     {
-        await ClickEventCallback.InvokeAsync(inventory);
+        await InventoryClickEventCallback.InvokeAsync(inventory);
         _inventories.Clear();
     }
 }

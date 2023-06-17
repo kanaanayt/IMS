@@ -10,8 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        <InventoryListItemComponent inventories="@_inventories">
-        </InventoryListItemComponent>
+        <InventoryListItemComponent inventories="@_inventories" />
     </tbody>
 </table>
 
@@ -19,7 +18,7 @@
 @code {
     [Parameter]
     public string SearchTerm { get; set; } = String.Empty;
-    private List<Inventory> _inventories = new List<Inventory>();
+    private List<Inventory> _inventories = new();
 
     protected override async Task OnParametersSetAsync()
     {

@@ -5,12 +5,9 @@
 <h1>Inventory List</h1>
 <br />
 
-<SearchInventoryComponent 
-    SearchEventCallback="SearchEventCallbackHandler">
-</SearchInventoryComponent>
+<SearchInventoryComponent SearchEventCallback="SearchEventCallbackHandler" />
 
-<InventoryListComponent SearchTerm="@SearchTerm">
-</InventoryListComponent>
+<InventoryListComponent SearchTerm="@SearchTerm" />
 
 <button class="btn btn-primary"
         @onclick="AddInventory">Add Inventory</button>

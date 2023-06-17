@@ -1,19 +1,20 @@
-﻿@inject IAddInventoryItemService AddInventoryItemService
-@inject NavigationManager NavigationManager
+﻿@page "/addinventory"
 
-@page "/addinventory"
+@inject IAddInventoryItemService AddInventoryItemService
+@inject NavigationManager NavigationManager
 
 <h1>Add Inventory</h1>
 
-<AddEditInventoryItem InventoryPopulated="@InventoryPopulated" operation="@operation">
-</AddEditInventoryItem>
+<AddEditInventoryItem InventoryPopulated="@InventoryPopulated" 
+                       operation="@operation" />
 
 @code {
-    public Inventory InventoryPopulated = new Inventory()
+    public Inventory InventoryPopulated = new()
         {
             InventoryName = "",
             Quantity = 1,
             Price = 1
         };
+
     public string operation = "add";
 }

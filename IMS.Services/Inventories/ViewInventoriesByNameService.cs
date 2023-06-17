@@ -11,15 +11,15 @@ namespace IMS.Services.Inventories
 {
     public class ViewInventoriesByNameService : IViewInventoriesByNameService
     {
-        private readonly IInventoryRepository inventoryRepository;
+        private readonly IInventoryRepository InventoryRepository;
 
-        public ViewInventoriesByNameService(IInventoryRepository inventoryRepository)
+        public ViewInventoriesByNameService(IInventoryRepository InventoryRepository)
         {
-            this.inventoryRepository = inventoryRepository;
+            this.InventoryRepository = InventoryRepository;
         }
         public async Task<IEnumerable<Inventory>> ExecuteAsync(string invName = "")
         {
-            return await inventoryRepository.GetInventoriesByNameAsync(invName);
+            return await InventoryRepository.GetInventoriesByNameAsync(invName);
         }
     }
 }

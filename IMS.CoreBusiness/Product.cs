@@ -16,11 +16,11 @@ namespace IMS.CoreBusiness
         public string ProductName { get; set; } = String.Empty;
 
         [Required]
-        [Range(1, 1000, ErrorMessage="Invalid Quantity")]
+        [Range(1, 500, ErrorMessage="Invalid Quantity")]
         public int Quantity { get; set; }
 
         [Required]
-        [Range(1, 1000, ErrorMessage="Invalid Price")]
+        [Range(1, 100000, ErrorMessage="Invalid Price")]
         public double Price { get; set; }
 
         public List<ProductInventory> ProductInventories { get; set; } = new();
@@ -41,7 +41,6 @@ namespace IMS.CoreBusiness
                         InventoryQuantity = 1,
                         ProductId = this.ProductId,
                         Product = this
-
                     }
                 );
             }

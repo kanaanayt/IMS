@@ -14,7 +14,7 @@ namespace IMS.Plugins.InMemory
 
         public ProductRepository()
         {
-            _products = new List<Product>()
+            _products = new()
             {
                 new Product {
 
@@ -32,50 +32,54 @@ namespace IMS.Plugins.InMemory
                 }
             };
         }
+
         public async Task<IEnumerable<Product>> GetProductsByNameAsync(string searchTerm)
         {
             if (String.IsNullOrWhiteSpace(searchTerm))
-            {
                 return await Task.FromResult(_products);
-            }
 
-            return _products.Where(prod =>
+            var products = _products.Where(prod =>
                 prod.ProductName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+            return await Task.FromResult(products);
         }
+
         public async Task<Product> GetProductByIdAsync(int productId)
         {
             return await Task.FromResult(_products.Single(prod => prod.ProductId == productId));
         }
+
         public async Task EditProductItemAsync(Product product)
         {
             foreach (var prod in _products)
             {
                 if (prod.ProductId != product.ProductId &&
-                    prod.ProductName.Equals(product.ProductName,
-                    StringComparison.OrdinalIgnoreCase))
+                    prod.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase))
                 {
-                    return;
+                    return; // return Task.CompletedTask;
                 }
             }
-            var editProduct = await GetProductByIdAsync(product.ProductId);
-            if (editProduct != null)
+
+            // var match = _products.Single(product => product.ProductId ==  product.ProductId);
+            var match = await GetProductByIdAsync(product.ProductId);
+            
+            if (match != null)
             {
-                editProduct.ProductName = product.ProductName;
-                editProduct.Quantity = product.Quantity;
-                editProduct.Price = product.Price;
+                match.ProductName = product.ProductName;
+                match.Quantity = product.Quantity;
+                match.Price = product.Price;
             }
-            return;
+            return; // return Task.CompletedTask;
         }
+
         public Task AddProductItemAsync(Product product)
         {
             if (_products.Any(prod =>
-                prod.ProductName.Equals(product.ProductName,
-                StringComparison.OrdinalIgnoreCase)))
+                prod.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
             {
                 return Task.CompletedTask;
             }
 
-            product.ProductId = _products.Count() + 1;
+            product.ProductId = _products.Count + 1;
             _products.Add(product);
 
             return Task.CompletedTask;

@@ -19,10 +19,10 @@
 
 @code {
     [Parameter]
-    public List<Inventory> inventories { get; set; } = new List<Inventory>();
+    public List<Inventory> inventories { get; set; } = new();
 
-    private void EditInventoryItem(int inventoryId)
+    private void EditInventoryItem(int id)
     {
-        NavigationManager.NavigateTo($"editinventory/{inventoryId}");
+        NavigationManager.NavigateTo($"editinventory/{id}");
     }
 }

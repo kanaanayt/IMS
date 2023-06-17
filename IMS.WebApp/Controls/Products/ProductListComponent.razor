@@ -19,7 +19,7 @@
     [Parameter]
     public string searchTerm { get; set; } = String.Empty;
 
-    private List<Product> _products = new List<Product>();
+    private List<Product> _products = new();
 
     protected override async Task OnParametersSetAsync()
     {

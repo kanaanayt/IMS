@@ -11,14 +11,14 @@ namespace IMS.Services.Inventories
 {
     public class AddInventoryItemService : IAddInventoryItemService
     {
-        private readonly IInventoryRepository inventoryRepository;
-        public AddInventoryItemService(IInventoryRepository inventoryRepository)
+        private readonly IInventoryRepository InventoryRepository;
+        public AddInventoryItemService(IInventoryRepository InventoryRepository)
         {
-            this.inventoryRepository = inventoryRepository;
+            this.InventoryRepository = InventoryRepository;
         }
         public async Task ExecuteAsync(Inventory inventoryItem)
         {
-            await inventoryRepository.AddInventoryItemAsync(inventoryItem);
+            await InventoryRepository.AddInventoryItemAsync(inventoryItem);
         }
     }
 }

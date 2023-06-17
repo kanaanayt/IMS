@@ -4,9 +4,8 @@
 
 <h3>EditProduct</h3>
 
-<AddEditProductItemComponent 
-    productPopulated="@productPopulated"
-    operation="@operation" />
+<AddEditProductItemComponent productPopulated="@productPopulated"
+                              operation="@operation" />
 
 @code {
     [Parameter]
@@ -14,7 +13,7 @@
 
     public string operation = "edit";
 
-    public Product productPopulated { get; set; } = new Product();
+    public Product productPopulated { get; set; } = new();
 
     protected override async Task OnParametersSetAsync()
     {

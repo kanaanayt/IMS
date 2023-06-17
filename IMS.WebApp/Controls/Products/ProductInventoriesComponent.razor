@@ -1,18 +1,18 @@
-﻿<InventoryDropdownComponent ClickEventCallback="ClickEventCallbackHandler" />
+﻿<InventoryDropdownComponent InventoryClickEventCallback="InventoryClickEventCallbackHandler" />
 
-@if (ProductWithEmptyList.ProductInventories != null 
-     && ProductWithEmptyList.ProductInventories.Count() > 0)
+@if (ProductInventoryless.ProductInventories != null 
+     && ProductInventoryless.ProductInventories.Count() > 0)
 {
     <table class="table">
         <thead>
             <tr>
                 <th>Product Inventory Name</th>
-                <th>Quantiy</th>
+                <th>Quantity</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var prodInv in ProductWithEmptyList.ProductInventories)
+            @foreach (var prodInv in ProductInventoryless.ProductInventories)
             {
                 <tr>
                     <td>
@@ -29,7 +29,8 @@
                         <button type="button"
                                 class="btn btn-link"
                                 @onclick=@( () => RemoveProductInventory(prodInv) )>
-                                Remove</button>
+                                Remove
+                        </button>
                     </td>
                 </tr>
             }
@@ -40,15 +41,15 @@
 
 @code {
     [Parameter]
-    public Product ProductWithEmptyList { get; set; } = new();
+    public Product ProductInventoryless { get; set; } = new();
 
-    private void ClickEventCallbackHandler(Inventory inventory)
+    private void InventoryClickEventCallbackHandler(Inventory inventory)
     {
-        ProductWithEmptyList.AddProductInventory(inventory);
+        ProductInventoryless.AddProductInventory(inventory);
     }
 
     private void RemoveProductInventory(ProductInventory productInventory)
     {
-        ProductWithEmptyList.ProductInventories.Remove(productInventory);
+        ProductInventoryless.ProductInventories.Remove(productInventory);
     }
 }
