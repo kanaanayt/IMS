@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace IMS.CoreBusiness
 {
+    public class ValidProductPrice
+    {
+        override 
+    }
     //public class ValidProductPrice : ValidationAttribute
     //{
     //    protected override ValidationResult IsValid(object value)
