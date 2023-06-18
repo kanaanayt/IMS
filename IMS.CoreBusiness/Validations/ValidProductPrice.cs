@@ -9,7 +9,7 @@ namespace IMS.CoreBusiness
 {
     public class ValidProductPrice
     {
-        override 
+        
     }
     //public class ValidProductPrice : ValidationAttribute
     //{

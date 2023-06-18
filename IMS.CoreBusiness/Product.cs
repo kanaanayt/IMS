@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace IMS.CoreBusiness
 {
+    [Product_PriceLargerThanComponentCost]
     public class Product
     {
         public int ProductId { get; set; }
