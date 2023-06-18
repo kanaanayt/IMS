@@ -12,22 +12,27 @@ namespace IMS.CoreBusiness.Validations
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            Product? product = validationContext.ObjectInstance as Product;
+            var product = validationContext.ObjectInstance as Product;
+
             if (product != null)
             {
                 if (!ValidPrice(product))
-                    return new ValidationResult($"Product price {product?.Price ?? 0} is less than total inventory cost {TotalInventoryCost(product)}", 
+                    return new ValidationResult($"" +
+                        $"Product price {product.Price.ToString("c")} " +
+                        $"is less than total inventories cost {TotalInventoriesCost(product).ToString("c")}", 
                         new List<string>
                         {
                             validationContext.MemberName
-                        });
-           
-                        ValidationResult.Success;
+                        }
+                    );
+
+                return ValidationResult.Success;
             }
-            
+
+            return ValidationResult.Success;
         }
 
-        private double TotalInventoryCost(Product product)
+        private double TotalInventoriesCost(Product product)
         {
             if (product == null || product.ProductInventories == null)
                 return 0;
@@ -40,8 +45,8 @@ namespace IMS.CoreBusiness.Validations
         {
             if (product.ProductInventories == null || product.ProductInventories.Count == 0) 
                 return true;
-            if (TotalInventoryCost(product) <= product.Price)
-                return true;
+            if (TotalInventoriesCost(product) > product.Price)
+                return false;
 
             return false;
         }

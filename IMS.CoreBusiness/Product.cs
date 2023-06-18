@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMS.CoreBusiness.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace IMS.CoreBusiness
 {
-    [Product_PriceLargerThanComponentCost]
     public class Product
     {
         public int ProductId { get; set; }
@@ -24,6 +24,7 @@ namespace IMS.CoreBusiness
         [Range(1, 100000, ErrorMessage="Invalid Price")]
         public double Price { get; set; }
 
+        [Product_PriceLargerThanComponentsCost]
         public List<ProductInventory> ProductInventories { get; set; } = new();
 
         public void AddProductInventory(Inventory inventory)
