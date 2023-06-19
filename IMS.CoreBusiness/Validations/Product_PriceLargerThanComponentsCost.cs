@@ -43,12 +43,12 @@ namespace IMS.CoreBusiness.Validations
 
         private bool ValidPrice(Product product)
         {
-            if (product.ProductInventories == null || product.ProductInventories.Count == 0) 
-                return true;
+            //if (product.ProductInventories == null || product.ProductInventories.Count == 0) 
+            //    return true;
             if (TotalInventoriesCost(product) > product.Price)
                 return false;
-
-            return false;
+            else
+                return true;
         }
     }
 }

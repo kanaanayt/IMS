@@ -18,6 +18,7 @@
 @code {
     [Parameter]
     public string SearchTerm { get; set; } = String.Empty;
+
     private List<Inventory> _inventories = new();
 
     protected override async Task OnParametersSetAsync()

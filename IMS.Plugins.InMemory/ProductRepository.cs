@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IMS.CoreBusiness;
+﻿using IMS.CoreBusiness;
 using IMS.Services.PluginInterfaces;
 
 namespace IMS.Plugins.InMemory
@@ -43,23 +38,16 @@ namespace IMS.Plugins.InMemory
             return await Task.FromResult(products);
         }
 
-        public async Task<Product> GetProductByIdAsync(int productId)
+        public async Task<Product?> GetProductByIdAsync(int productId)
         {
-            return await Task.FromResult(_products.Single(prod => prod.ProductId == productId));
+            return await Task.FromResult(_products.FirstOrDefault(prod => prod.ProductId == productId));
         }
 
         public async Task EditProductItemAsync(Product product)
         {
-            foreach (var prod in _products)
-            {
-                if (prod.ProductId != product.ProductId &&
-                    prod.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase))
-                {
-                    return; // return Task.CompletedTask;
-                }
-            }
+            if (await ExistsAsync(product))
+                return;
 
-            // var match = _products.Single(product => product.ProductId ==  product.ProductId);
             var match = await GetProductByIdAsync(product.ProductId);
             
             if (match != null)
@@ -67,8 +55,17 @@ namespace IMS.Plugins.InMemory
                 match.ProductName = product.ProductName;
                 match.Quantity = product.Quantity;
                 match.Price = product.Price;
+                match.ProductInventories = product.ProductInventories;
             }
-            return; // return Task.CompletedTask;
+
+            return;
+        }
+
+        public async Task<bool> ExistsAsync(Product product)
+        {
+            return await Task.FromResult(_products.Any(prod =>
+                prod.ProductId != product.ProductId &&
+                prod.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)));
         }
 
         public Task AddProductItemAsync(Product product)

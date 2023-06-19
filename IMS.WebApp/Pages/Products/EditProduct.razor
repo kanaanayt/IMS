@@ -12,8 +12,7 @@
     public int id { get; set; }
 
     public string operation = "edit";
-
-    public Product productPopulated { get; set; } = new();
+    public Product? productPopulated { get; set; } = new();
 
     protected override async Task OnParametersSetAsync()
     {

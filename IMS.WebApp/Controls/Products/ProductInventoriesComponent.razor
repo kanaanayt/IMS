@@ -1,7 +1,10 @@
-﻿<InventoryDropdownComponent InventoryClickEventCallback="InventoryClickEventCallbackHandler" />
+﻿@if (operation.Equals("add"))
+{
+    <InventoryDropdownComponent InventoryClickEventCallback="InventoryClickEventCallbackHandler" />
+}
 
-@if (ProductInventoryless.ProductInventories != null 
-     && ProductInventoryless.ProductInventories.Count() > 0)
+@if (ProductInventoriesPopulated.ProductInventories != null &&
+     ProductInventoriesPopulated.ProductInventories.Count() > 0)
 {
     <table class="table">
         <thead>
@@ -12,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var prodInv in ProductInventoryless.ProductInventories)
+            @foreach (var prodInv in ProductInventoriesPopulated.ProductInventories)
             {
                 <tr>
                     <td>
@@ -21,7 +24,7 @@
 
                     <td>
                         <input type="number"
-                               min="1"
+                               min="0"
                                @bind-value=prodInv.InventoryQuantity />
                     </td>
 
@@ -41,15 +44,18 @@
 
 @code {
     [Parameter]
-    public Product ProductInventoryless { get; set; } = new();
+    public string operation { get; set; } = String.Empty;
+
+    [Parameter]
+    public Product ProductInventoriesPopulated { get; set; } = new();
 
     private void InventoryClickEventCallbackHandler(Inventory inventory)
     {
-        ProductInventoryless.AddProductInventory(inventory);
+        ProductInventoriesPopulated.AddProductInventory(inventory);
     }
 
     private void RemoveProductInventory(ProductInventory productInventory)
     {
-        ProductInventoryless.ProductInventories.Remove(productInventory);
+        ProductInventoriesPopulated.ProductInventories.Remove(productInventory);
     }
 }

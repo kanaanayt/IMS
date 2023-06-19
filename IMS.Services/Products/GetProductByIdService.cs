@@ -17,7 +17,7 @@ namespace IMS.Services.Products
         {
             this.ProductRepository = ProductRepository;
         }
-        public async Task<Product> ExecuteAsync(int productId)
+        public async Task<Product?> ExecuteAsync(int productId)
         {
             return await ProductRepository.GetProductByIdAsync(productId);
         }

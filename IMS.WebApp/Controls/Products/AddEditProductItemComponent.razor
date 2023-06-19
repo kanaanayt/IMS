@@ -31,16 +31,19 @@
     
     <br />
     
-    @if (operation.Equals("add"))
-    {
-        <div class="form-group">
-            <label for="inventory">Inventory Items</label>
-            <ProductInventoriesComponent ProductInventoryless="@productPopulated" />
+    <div class="form-group">
+        <label for="inventory">
+            <h5>Inventory Items</h5>
+        </label>
+        <div class="card">
+            <div class="card-body">
+                <ProductInventoriesComponent ProductInventoriesPopulated="@productPopulated" 
+                                              operation="@operation" />
+            </div>
         </div>
-    }
+    </div>
 
-    <br />
-    
+        
     <div class="form-group">
         <button type="submit"
                 class="btn btn-primary">Submit</button>
