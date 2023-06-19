@@ -67,13 +67,11 @@ namespace IMS.Plugins.InMemory
             return Task.CompletedTask;
         }
 
-        public Task EditInventoryItemAsync(Inventory inventory)
+        public async Task EditInventoryItemAsync(Inventory inventory)
         {
-            if (_inventories.Any(inv => 
-                inv.InventoryId != inventory.InventoryId &&
-                inv.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+            if (await ExistsAsync(inventory))
             {
-                return Task.CompletedTask;
+                return;
             }
 
             var match = _inventories.FirstOrDefault(inv => inv.InventoryId == inventory.InventoryId);
@@ -85,12 +83,30 @@ namespace IMS.Plugins.InMemory
                 match.Price = inventory.Price;
             }
 
-            return Task.CompletedTask;
+            return;
+        }
+
+        public async Task<bool> ExistsAsync(Inventory inventory)
+        {
+            return await Task.FromResult(_inventories.Any(inv =>
+                inv.InventoryId != inventory.InventoryId &&
+                inv.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)));
         }
 
         public async Task<Inventory?> GetInventoryByIdAsync(int inventoryId)
         {
-            return await Task.FromResult(_inventories.FirstOrDefault(inv => inv.InventoryId == inventoryId));
+            var inventory = _inventories.FirstOrDefault(inv => inv.InventoryId == inventoryId);
+            Inventory copy = new();
+
+            if (inventory != null)
+            {
+                copy.InventoryId = inventory.InventoryId;
+                copy.InventoryName = inventory.InventoryName;
+                copy.Price = inventory.Price;
+                copy.Quantity = inventory.Quantity;
+            }
+
+            return await Task.FromResult(copy);
         }
     }
 }

@@ -40,7 +40,43 @@ namespace IMS.Plugins.InMemory
 
         public async Task<Product?> GetProductByIdAsync(int productId)
         {
-            return await Task.FromResult(_products.FirstOrDefault(prod => prod.ProductId == productId));
+            var product = _products.FirstOrDefault(prod => prod.ProductId == productId);
+            Product copy = new();
+
+            if (product != null)
+            {
+                copy.ProductId = product.ProductId;
+                copy.ProductName = product.ProductName;
+                copy.Price = product.Price;
+                copy.Quantity = product.Quantity;
+            }
+
+            copy.ProductInventories = new List<ProductInventory>();
+
+            if (product?.ProductInventories != null && product.ProductInventories.Count > 0)
+            {
+                product?.ProductInventories.ForEach(prodInv =>
+                {
+                    ProductInventory copyProdInv = new();
+                    copyProdInv.InventoryId = prodInv.InventoryId;
+                    copyProdInv.InventoryQuantity = prodInv.InventoryQuantity;
+                    copyProdInv.Product = prodInv.Product;
+                    copyProdInv.ProductId = prodInv.ProductId;
+
+                    if (prodInv.Inventory != null)
+                    {
+                        copyProdInv.Inventory = new Inventory
+                        {
+                            InventoryId = prodInv.Inventory.InventoryId,
+                            InventoryName = prodInv.Inventory.InventoryName,
+                            Price = prodInv.Inventory.Price,
+                            Quantity = prodInv.Inventory.Quantity
+                        };
+                    }
+                });
+            }
+
+            return await Task.FromResult(copy);
         }
 
         public async Task EditProductItemAsync(Product product)
@@ -48,7 +84,7 @@ namespace IMS.Plugins.InMemory
             if (await ExistsAsync(product))
                 return;
 
-            var match = await GetProductByIdAsync(product.ProductId);
+            var match = _products.FirstOrDefault(prod => prod.ProductId == product.ProductId);
             
             if (match != null)
             {

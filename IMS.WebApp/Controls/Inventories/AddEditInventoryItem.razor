@@ -51,13 +51,10 @@
     private async Task SubmitHandler()
     {
         if (operation.Equals("add"))
-        {
             await AddInventoryItemService.ExecuteAsync(InventoryPopulated);
-        }    
+        
         else
-        {
             await EditInventoryItemService.ExecuteAsync(InventoryPopulated);
-        }
 
         Redirect();
     }
