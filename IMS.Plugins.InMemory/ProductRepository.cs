@@ -58,10 +58,11 @@ namespace IMS.Plugins.InMemory
                 product?.ProductInventories.ForEach(prodInv =>
                 {
                     ProductInventory copyProdInv = new();
+
                     copyProdInv.InventoryId = prodInv.InventoryId;
                     copyProdInv.InventoryQuantity = prodInv.InventoryQuantity;
-                    copyProdInv.Product = prodInv.Product;
-                    copyProdInv.ProductId = prodInv.ProductId;
+                    copyProdInv.Product = product;
+                    copyProdInv.ProductId = product.ProductId;
 
                     if (prodInv.Inventory != null)
                     {
@@ -73,6 +74,8 @@ namespace IMS.Plugins.InMemory
                             Quantity = prodInv.Inventory.Quantity
                         };
                     }
+
+                    copy.ProductInventories.Add(copyProdInv);
                 });
             }
 
