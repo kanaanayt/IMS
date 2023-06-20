@@ -94,7 +94,11 @@ namespace IMS.Plugins.InMemory
                 match.ProductName = product.ProductName;
                 match.Quantity = product.Quantity;
                 match.Price = product.Price;
-                match.ProductInventories = product.ProductInventories;
+                match.ProductInventories = new List<ProductInventory>();
+                product.ProductInventories.ForEach(prodInv =>
+                {
+                    match.ProductInventories.Add(prodInv);
+                });
             }
 
             return;

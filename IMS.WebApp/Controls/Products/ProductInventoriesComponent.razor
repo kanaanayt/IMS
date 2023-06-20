@@ -1,7 +1,4 @@
-﻿@if (operation.Equals("add"))
-{
-    <InventoryDropdownComponent InventoryClickEventCallback="InventoryClickEventCallbackHandler" />
-}
+﻿<InventoryDropdownComponent InventoryClickEventCallback="InventoryClickEventCallbackHandler" />
 
 @if (ProductInventoriesPopulated.ProductInventories != null &&
      ProductInventoriesPopulated.ProductInventories.Count() > 0)
@@ -18,9 +15,7 @@
             @foreach (var prodInv in ProductInventoriesPopulated.ProductInventories)
             {
                 <tr>
-                    <td>
-                        @prodInv.Inventory?.InventoryName
-                    </td>
+                    <td>@prodInv.Inventory?.InventoryName</td>
 
                     <td>
                         <input type="number"
@@ -40,7 +35,6 @@
         </tbody>
     </table>
 }
-
 
 @code {
     [Parameter]

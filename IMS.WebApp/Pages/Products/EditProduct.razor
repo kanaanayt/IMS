@@ -9,13 +9,13 @@
 
 @code {
     [Parameter]
-    public int id { get; set; }
+    public int Id { get; set; }
 
     public string operation = "edit";
     public Product? productPopulated { get; set; } = new();
 
     protected override async Task OnParametersSetAsync()
     {
-        productPopulated = await GetProductByIdService.ExecuteAsync(id);
+        productPopulated = await GetProductByIdService.ExecuteAsync(Id);
     }
 }
