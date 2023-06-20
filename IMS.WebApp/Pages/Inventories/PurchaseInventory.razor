@@ -1,0 +1,33 @@
+﻿@page "/purchaseinventory"
+
+@inject IViewInventoriesByNameService ViewInventoriesByNameService
+
+<h1>PurchaseInventory</h1>
+
+<div class="form-control">
+    <input type="text"
+           class="form-group"
+           @bind-value=@SearchTerm @bind:event="oninput" 
+           @onkeyup=@( () => SearchInventory(SearchTerm) ) />
+</div>
+
+<ul>
+    @if (_inventories != null && _inventories.Count > 0)
+        foreach (var inventory in _inventories)
+        {
+            <li>@inventory.InventoryName</li>
+        }
+</ul>
+
+       
+
+@code {
+    public string SearchTerm { get; set; } = String.Empty;
+
+    private List<Inventory> _inventories;
+
+    public async Task SearchInventory(string SearchTerm = "")
+    {
+        _inventories = (await ViewInventoriesByNameService.ExecuteAsync(SearchTerm)).ToList();
+    }
+}
