@@ -1,33 +1,83 @@
 ﻿@page "/purchaseinventory"
 
 @inject IViewInventoriesByNameService ViewInventoriesByNameService
+@inject IPurchaseInventoryService PurchaseInventoryService
 
 <h1>PurchaseInventory</h1>
 
-<div class="form-control">
+<div class="form-group">
+    <label for="order">Purchase Order</label>
     <input type="text"
-           class="form-group"
-           @bind-value=@SearchTerm @bind:event="oninput" 
-           @onkeyup=@( () => SearchInventory(SearchTerm) ) />
+           class="form-control"
+           id="order"
+           @bind-value="purchaseOrder"/>
+</div>
+
+<div class="form-group">
+    <label for="purchase">Inventory to Purchase</label>
+    <input type="text"
+           class="form-control"
+           id="purchase"
+           placeholder="Type inventory name here to search"
+           @bind-value="SearchTerm" 
+           @bind-value:event="oninput"
+           @onkeydown=@( () => SearchInventory(SearchTerm) ) />
 </div>
 
 <ul>
     @if (_inventories != null && _inventories.Count > 0)
         foreach (var inventory in _inventories)
         {
-            <li>@inventory.InventoryName</li>
+            <li @key=@inventory.InventoryId
+                @onclick=@( () => SelectInventory(inventory) )>
+                @inventory.InventoryName</li>
         }
 </ul>
 
-       
+@inventory.InventoryName
+
+<div class=form-group>
+    <label for="quantity">Quantity</label>
+    <input type="number"
+           class="form-control"
+           id="quantity"
+           min="0"
+           @bind-value="purchaseQuantity" />
+</div>
+
+<div class=form-group>
+    <button type="button"
+            class="btn btn-secondary"
+            @onclick="Submit" >
+            Purchase
+    </button>
+</div>
 
 @code {
     public string SearchTerm { get; set; } = String.Empty;
 
-    private List<Inventory> _inventories;
+    private List<Inventory> _inventories = new();
+    private Inventory inventory = new();
+    private int purchaseQuantity;
+    private string purchaseOrder = String.Empty;
 
     public async Task SearchInventory(string SearchTerm = "")
     {
         _inventories = (await ViewInventoriesByNameService.ExecuteAsync(SearchTerm)).ToList();
+    }
+
+    private void SelectInventory(Inventory inventory)
+    {
+        this.inventory = inventory;
+        _inventories = new();
+    }
+
+    private void Submit()
+    {
+        PurchaseInventoryService.ExecuteAsync(this.inventory, purchaseQuantity, "buyer", purchaseOrder);
+        ReportTransactionService.ExecuteAsync(this.inventory.InventoryId,
+                                              purchaseQuantity,
+                                              "purchase");
+
     }
 }

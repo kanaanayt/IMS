@@ -26,6 +26,7 @@ builder.Services.AddTransient<IViewProductsByNameService, ViewProductsByNameServ
 builder.Services.AddTransient<IGetProductByIdService, GetProductByIdService>();
 builder.Services.AddTransient<IEditProductItemService, EditProductItemService>();
 builder.Services.AddTransient<IAddProductItemService, AddProductItemService>();
+builder.Services.AddTransient<IPurchaseInventoryService, PurchaseInventoryService>();
 
 var app = builder.Build();
 
