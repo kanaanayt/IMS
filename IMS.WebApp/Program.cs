@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using IMS.Services.Products;
 using IMS.Services.Products.Interfaces;
+using IMS.Services.Activities;
 
 var builder = WebApplication.CreateBuilder(args);
 

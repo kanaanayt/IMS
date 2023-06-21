@@ -11,25 +11,19 @@ namespace IMS.Services.Activities
     public class PurchaseInventoryService : IPurchaseInventoryService
     {
         private readonly IInventoryRepository InventoryRepository;
-        private readonly ITransactionRepository TransactionRepository;
+        private readonly IInventoryTransactionRepository InventoryTransactionRepository;
 
         public PurchaseInventoryService(IInventoryRepository InventoryRepository,
-                                        ITransactionRepository TransactionRepository)
+                                        IInventoryTransactionRepository InventoryTransactionRepository)
         {
             this.InventoryRepository = InventoryRepository;
-            this.TransactionRepository = TransactionRepository;
+            this.InventoryTransactionRepository = InventoryTransactionRepository;
         }
 
-        public async Task ExecuteAsync(Inventory inventory, int purchaseQuantity,
-                                       string author, string poNumber)
+        public async Task ExecuteAsync(Inventory inventory, int purchaseQuantity, string author, string poNumber)
         {
-            await InventoryRepository.PurchaseInventoryAsync(inventory, purchaseQuantity,
-                                                             author, poNumber);
-            await TransactionRepository.AddTransactionAsync(Transaction.TransactionType.Purchase,
-                                                       Transaction.ItemType.Inventory,
-                                                       purchaseQuantity,
-                                                       poNumber,
-                                                       author);
+            await InventoryTransactionRepository.PurchaseAsync(inventory, poNumber, author, purchaseQuantity);
+            await InventoryRepository.PurchaseInventoryAsync(inventory, purchaseQuantity, author, poNumber);
         }
     }
 }
