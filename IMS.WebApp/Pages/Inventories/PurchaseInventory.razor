@@ -10,7 +10,7 @@
     <input type="text"
            class="form-control"
            id="order"
-           @bind-value="purchaseOrder"/>
+           @bind-value="poNumber"/>
 </div>
 
 <div class="form-group">
@@ -59,7 +59,7 @@
     private List<Inventory> _inventories = new();
     private Inventory inventory = new();
     private int purchaseQuantity;
-    private string purchaseOrder = String.Empty;
+    private string poNumber = String.Empty;
 
     public async Task SearchInventory(string SearchTerm = "")
     {
@@ -74,10 +74,9 @@
 
     private void Submit()
     {
-        PurchaseInventoryService.ExecuteAsync(this.inventory, purchaseQuantity, "buyer", purchaseOrder);
-        ReportTransactionService.ExecuteAsync(this.inventory.InventoryId,
-                                              purchaseQuantity,
-                                              "purchase");
-
+        PurchaseInventoryService.ExecuteAsync(this.inventory, purchaseQuantity, "buyer", poNumber);
+        //ReportTransactionService.ExecuteAsync(this.inventory.InventoryId,
+        //                                      purchaseQuantity,
+        //                                      "purchase");
     }
 }

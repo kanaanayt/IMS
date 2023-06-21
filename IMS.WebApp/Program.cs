@@ -29,6 +29,8 @@ builder.Services.AddTransient<IEditProductItemService, EditProductItemService>()
 builder.Services.AddTransient<IAddProductItemService, AddProductItemService>();
 builder.Services.AddTransient<IPurchaseInventoryService, PurchaseInventoryService>();
 
+builder.Services.AddTransient<IInventoryTransactionRepository, InventoryTransactionRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

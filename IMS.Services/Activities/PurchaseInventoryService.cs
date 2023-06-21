@@ -23,7 +23,9 @@ namespace IMS.Services.Activities
         public async Task ExecuteAsync(Inventory inventory, int purchaseQuantity, string author, string poNumber)
         {
             await InventoryTransactionRepository.PurchaseAsync(inventory, poNumber, author, purchaseQuantity);
-            await InventoryRepository.PurchaseInventoryAsync(inventory, purchaseQuantity, author, poNumber);
+
+            inventory.Quantity += purchaseQuantity;
+            await InventoryRepository.EditInventoryItemAsync(inventory);
         }
     }
 }

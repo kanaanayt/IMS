@@ -1,4 +1,5 @@
 ﻿using IMS.CoreBusiness;
+using IMS.Services.PluginInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IMS.Plugins.InMemory
 {
-    public class InventoryTransactionRepository : IInventoryTransactionRepository, IInventoryTransactionRepository
+    public class InventoryTransactionRepository : IInventoryTransactionRepository
     {
         private List<Transaction> _transactions = new();
 

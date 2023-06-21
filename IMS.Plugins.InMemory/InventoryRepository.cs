@@ -108,17 +108,5 @@ namespace IMS.Plugins.InMemory
 
             return await Task.FromResult(copy);
         }
-
-        public async Task PurchaseInventoryAsync(Inventory inventory, 
-                                                 int purchaseQuantity, 
-                                                 string author, 
-                                                 string poNumber)
-        {
-            var Inventory = await Task.FromResult(_inventories.FirstOrDefault(inv =>
-                inv.InventoryId == inventory.InventoryId));
-
-            if (Inventory != null)
-                Inventory.Quantity += purchaseQuantity;
-        }
     }
 }

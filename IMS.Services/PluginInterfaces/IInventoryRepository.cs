@@ -13,7 +13,5 @@ namespace IMS.Services.PluginInterfaces
         Task AddInventoryItemAsync(Inventory inventory);
         Task EditInventoryItemAsync(Inventory inventory);
         Task<Inventory?> GetInventoryByIdAsync(int inventoryId);
-        Task PurchaseInventoryAsync(Inventory inventory, 
-                                    int purchaseQuantity, string author, string poNumber);
     }
 }
