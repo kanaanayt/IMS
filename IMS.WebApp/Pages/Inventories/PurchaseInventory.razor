@@ -10,7 +10,7 @@
     <input type="text"
            class="form-control"
            id="order"
-           @bind-value="poNumber"/>
+           @bind-value="poNumber" />
 </div>
 
 <div class="form-group">
@@ -30,7 +30,8 @@
         {
             <li @key=@inventory.InventoryId
                 @onclick=@( () => SelectInventory(inventory) )>
-                @inventory.InventoryName</li>
+                @inventory.InventoryName
+            </li>
         }
 </ul>
 
@@ -75,8 +76,5 @@
     private void Submit()
     {
         PurchaseInventoryService.ExecuteAsync(this.inventory, purchaseQuantity, "buyer", poNumber);
-        //ReportTransactionService.ExecuteAsync(this.inventory.InventoryId,
-        //                                      purchaseQuantity,
-        //                                      "purchase");
     }
 }

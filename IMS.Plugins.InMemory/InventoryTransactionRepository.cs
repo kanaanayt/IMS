@@ -10,7 +10,7 @@ namespace IMS.Plugins.InMemory
 {
     public class InventoryTransactionRepository : IInventoryTransactionRepository
     {
-        private List<Transaction> _transactions = new();
+        private List<InventoryTransaction> _inventoryTransactions = new();
 
         public Task PurchaseAsync(Inventory inventory, 
                                   int quantity,
@@ -18,17 +18,17 @@ namespace IMS.Plugins.InMemory
                                   string poNumber,
                                   string author)
         {
-            _transactions.Add(new Transaction
+            _inventoryTransactions.Add(new InventoryTransaction
             {
-                TransactionId = _transactions.Count + 1,
-                TransactionType = TransactionType.Purchase,
-                ItemType = ItemType.Inventory,
-                QuantityBefore = inventory.Quantity,
-                QuantityAfter = inventory.Quantity + quantity,
+                TransactionId = _inventoryTransactions.Count + 1,
+                InventoryId = inventory.InventoryId,
                 PoNumber = poNumber,
                 Author = author,
-                TransactionDate = DateTime.Now,
-                Price = price
+                UnitPrice = price,
+                QuantityBefore = inventory.Quantity,
+                QuantityAfter = inventory.Quantity + quantity,
+                TransactionDate = new DateTime(),
+                Activity = InventoryTransactionActivity.PurchaseInventory
             });
             return Task.CompletedTask;
         }
