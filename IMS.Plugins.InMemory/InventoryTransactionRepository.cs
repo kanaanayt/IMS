@@ -20,15 +20,15 @@ namespace IMS.Plugins.InMemory
         {
             _inventoryTransactions.Add(new InventoryTransaction
             {
-                TransactionId = _inventoryTransactions.Count + 1,
+                InventoryTransactionId = _inventoryTransactions.Count + 1,
                 InventoryId = inventory.InventoryId,
                 PoNumber = poNumber,
                 Author = author,
                 UnitPrice = price,
                 QuantityBefore = inventory.Quantity,
                 QuantityAfter = inventory.Quantity + quantity,
-                TransactionDate = new DateTime(),
-                Activity = InventoryTransactionActivity.PurchaseInventory
+                TransactionDate = DateTime.Now,
+                Activity = InventoryTransactionType.PurchaseInventory
             });
             return Task.CompletedTask;
         }

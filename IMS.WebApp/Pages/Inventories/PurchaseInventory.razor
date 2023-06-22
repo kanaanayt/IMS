@@ -3,6 +3,7 @@
 @inject IViewInventoriesByNameService ViewInventoriesByNameService
 @inject IPurchaseInventoryService PurchaseInventoryService
 
+
 <h1>PurchaseInventory</h1>
 
 <div class="form-group">
@@ -14,6 +15,9 @@
 </div>
 
 <div class="form-group">
+
+    <AutoCompleteComponent SearchEventCallback="SearchEventCallbackHandler" />
+
     <label for="purchase">Inventory to Purchase</label>
     <input type="text"
            class="form-control"
@@ -76,5 +80,10 @@
     private void Submit()
     {
         PurchaseInventoryService.ExecuteAsync(this.inventory, purchaseQuantity, "buyer", poNumber);
+    }
+
+    public void SearchEventCallbackHandler(string searchTerm)
+    {
+        this.SearchTerm = searchTerm;
     }
 }

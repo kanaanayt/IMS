@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IMS.CoreBusiness
 {
-    public enum InventoryTransactionActivity
+    public enum InventoryTransactionType
     {
         PurchaseInventory = 1,
-        ProductProduct = 2
+        ProduceProduct = 2
     }
 }

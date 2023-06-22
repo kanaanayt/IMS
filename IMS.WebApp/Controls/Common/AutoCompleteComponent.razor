@@ -1,0 +1,35 @@
+﻿<div class=form-group>
+    <label for="search">@Label</label>
+    <input type="text"
+           id="search"
+           placeholder=@Placeholder
+           class="form-control"
+           @bind-value="searchTerm"
+           @bind-value:event="oninput"
+           />
+</div>
+
+<div class=form-group>
+    <button type="button"
+            class="btn btn-primary"
+            @onclick="OnSearch">
+            Search
+    </button>
+</div>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = String.Empty;
+
+    [Parameter]
+    public string Placeholder { get; set; } = String.Empty;
+
+    public string searchTerm { get; set; } = String.Empty;
+
+    public EventCallback<string> SearchEventCallback { get; set; }
+
+    public void OnSearch()
+    {
+        SearchEventCallback.InvokeAsync(this.searchTerm);
+    }
+}

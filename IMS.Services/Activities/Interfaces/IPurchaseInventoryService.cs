@@ -1,6 +1,6 @@
 ﻿using IMS.CoreBusiness;
 
-namespace IMS.Services.Activities
+namespace IMS.Services.Activities.Interfaces
 {
     public interface IPurchaseInventoryService
     {

@@ -1,4 +1,5 @@
 ﻿using IMS.CoreBusiness;
+using IMS.Services.Activities.Interfaces;
 using IMS.Services.PluginInterfaces;
 using System;
 using System.Collections.Generic;
