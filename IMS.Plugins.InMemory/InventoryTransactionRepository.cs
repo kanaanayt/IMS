@@ -12,10 +12,11 @@ namespace IMS.Plugins.InMemory
     {
         private List<Transaction> _transactions = new();
 
-        public Task PurchaseAsync(Inventory inventory,
-                                        string poNumber,
-                                        string author,
-                                        int quantity)
+        public Task PurchaseAsync(Inventory inventory, 
+                                  int quantity,
+                                  double price,
+                                  string poNumber,
+                                  string author)
         {
             _transactions.Add(new Transaction
             {
@@ -26,7 +27,8 @@ namespace IMS.Plugins.InMemory
                 QuantityAfter = inventory.Quantity + quantity,
                 PoNumber = poNumber,
                 Author = author,
-                TransactionDate = DateTime.Now
+                TransactionDate = DateTime.Now,
+                Price = price
             });
             return Task.CompletedTask;
         }

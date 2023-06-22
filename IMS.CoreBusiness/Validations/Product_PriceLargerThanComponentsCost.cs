@@ -17,15 +17,16 @@ namespace IMS.CoreBusiness.Validations
             if (product != null)
             {
                 if (!ValidPrice(product))
+                {
                     return new ValidationResult($"" +
                         $"Product price {product.Price.ToString("c")} " +
-                        $"is less than total inventories cost {TotalInventoriesCost(product).ToString("c")}", 
+                        $"is less than total inventories cost {TotalInventoriesCost(product).ToString("c")}",
                         new List<string>
                         {
                             validationContext.MemberName
                         }
                     );
-
+                }
                 return ValidationResult.Success;
             }
 

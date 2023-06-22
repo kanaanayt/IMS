@@ -4,6 +4,6 @@ namespace IMS.Services.PluginInterfaces
 {
     public interface IInventoryTransactionRepository
     {
-        Task PurchaseAsync(Inventory inventory, string poNumber, string author, int quantity);
+        Task PurchaseAsync(Inventory inventory, int quantity, double price, string poNumber, string author);
     }
 }

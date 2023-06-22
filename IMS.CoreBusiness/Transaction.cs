@@ -18,7 +18,6 @@ namespace IMS.CoreBusiness
     }
     public class Transaction
     {
-
         public int TransactionId { get; set; }
         public TransactionType TransactionType { get; set; }
         public ItemType ItemType { get; set; }
@@ -27,5 +26,6 @@ namespace IMS.CoreBusiness
         public string PoNumber { get; set; } = String.Empty;
         public string Author { get; set; } = String.Empty;
         public DateTime TransactionDate { get; set; }
+        public double Price { get; set; }
     }
 }
