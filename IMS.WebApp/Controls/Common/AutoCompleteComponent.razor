@@ -24,8 +24,21 @@
     [Parameter]
     public string Placeholder { get; set; } = String.Empty;
 
-    public string searchTerm { get; set; } = String.Empty;
+    // public string searchTerm { get; set; } = String.Empty;
 
+    private string _searchTerm = string.Empty;
+
+    public string searchTerm
+    {
+        get { return _searchTerm; }
+        set 
+        { 
+            _searchTerm = value;
+            SearchEventCallback.InvokeAsync(_searchTerm);
+        }
+    }
+
+    [Parameter]
     public EventCallback<string> SearchEventCallback { get; set; }
 
     public void OnSearch()
